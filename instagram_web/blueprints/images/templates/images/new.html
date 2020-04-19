@@ -1,0 +1,16 @@
+{% extends "_layout.html" %}
+{% block title %}
+  Upload Image
+{% endblock %}
+{% block content %}
+<div class="w-100 d-flex flex-column align-items-center my-3">
+    <h1>Upload Your Images</h1>
+    <form action="{{url_for('images.create')}}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" / >
+        <br>
+        <input type="file" name="image_file">
+        <br>
+        <button class="btn btn-primary" type="submit">Upload</button>
+    </form>
+</div>
+{% endblock %}

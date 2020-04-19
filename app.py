@@ -1,7 +1,15 @@
 import os
 import config
 from flask import Flask
-from models.base_model import db
+import django
+django.setup()
+from instagram.models.user import User
+from django.apps import apps
+from django.conf import settings
+from flask_wtf.csrf import CSRFProtect
+from flask_login import LoginManager
+
+apps.populate(settings.INSTALLED_APPS)
 
 web_dir = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), 'instagram_web')
@@ -14,14 +22,28 @@ else:
     app.config.from_object("config.DevelopmentConfig")
 
 
-@app.before_request
-def before_request():
-    db.connect()
+# @app.before_request
+# def before_request():
+#     db.connect()
 
 
-@app.teardown_request
-def _db_close(exc):
-    if not db.is_closed():
-        print(db)
-        print(db.close())
-    return exc
+# @app.teardown_request
+# def _db_close(exc):
+#     if not db.is_closed():
+#         print(db)
+#         print(db.close())
+#     return exc
+
+csrf = CSRFProtect()
+csrf.init_app(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+login_manager.login_view = "sessions.new" 
+login_manager.login_message = "Please log in before proceeding"
+login_manager.login_message_category = "danger"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.objects.get(id=user_id)
