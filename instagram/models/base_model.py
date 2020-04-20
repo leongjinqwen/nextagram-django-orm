@@ -22,7 +22,6 @@ class BaseModel(models.Model, metaclass=MyModelBase):
     def save(self, *args, **kwargs):
         try:
             self.full_clean()
-            # self.save() #recursive error
             super(BaseModel, self).save(*args, **kwargs)
             return True
         except ValidationError as err:

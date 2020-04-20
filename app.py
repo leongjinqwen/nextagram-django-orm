@@ -1,10 +1,10 @@
 import os
 import config
 from flask import Flask
-from django.apps import apps
-from django.conf import settings
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
+from django.apps import apps
+from django.conf import settings
 
 apps.populate(settings.INSTALLED_APPS)
 

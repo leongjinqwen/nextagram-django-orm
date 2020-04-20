@@ -37,15 +37,12 @@ class User(UserMixin,BaseModel):
 
     class Meta:
         indexes = [
-            models.Index(fields=['username', 'email']),
+            models.Index(fields=['username', 'email','role']),
         ]
 
     @classmethod
     def get_or_none(self, **kwargs):
-        try:
-            return User.objects.get(**kwargs)
-        except ObjectDoesNotExist:
-            return None
+        return User.objects.filter(**kwargs)
 
     @hybrid_property
     def profile_image_url(self):
