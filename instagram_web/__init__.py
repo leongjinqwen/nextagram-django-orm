@@ -7,6 +7,7 @@ from instagram_web.blueprints.donations.views import donations_blueprint
 from instagram_web.blueprints.followings.views import followings_blueprint
 from flask_assets import Environment, Bundle
 from .util.assets import bundles
+from flask_login import current_user, login_required
 
 assets = Environment(app)
 assets.register(bundles)
@@ -23,11 +24,11 @@ def internal_server_error(e):
 
 
 @app.route("/")
+@login_required
 def home():
     from instagram.models.image import Image
     from instagram.models.user import User
     from instagram.models.fanidol import FanIdol
-    from flask_login import current_user
     # show all idols
     idols = current_user.followings()
     # idols = User.select().join(FanIdol,on=(FanIdol.idol==User.id)).where(FanIdol.fan==current_user.id)

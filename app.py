@@ -22,9 +22,10 @@ else:
     app.config.from_object("config.DevelopmentConfig")
 
 
-# @app.before_request
-# def before_request():
-#     db.connect()
+@app.before_request
+def before_request():
+    # db.connect()
+    django.setup()
 
 
 # @app.teardown_request

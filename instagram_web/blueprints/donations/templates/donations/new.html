@@ -3,7 +3,7 @@
 {% block content %}
 <form id="payment-form" method="POST" action="{{url_for('donations.create',id=image.id)}}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" / >
-    <img src="{{image.image_path_url()}}" width="300"  alt="donateimage">
+    <img src="{{image.image_path_url}}" width="300"  alt="donateimage">
     <section>
         <label for="amount">
             <span class="input-label">How much would you like to donate?</span>

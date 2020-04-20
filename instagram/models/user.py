@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from werkzeug.security import generate_password_hash
 from .base_model import BaseModel
 from flask_login import UserMixin
-# from django_hybrid_attributes import hybrid_metho, HybridQuerySet
+from django_hybrid_attributes import hybrid_property
 
 class UserValidation():
     @classmethod
@@ -43,6 +43,7 @@ class User(UserMixin,BaseModel):
         except ObjectDoesNotExist:
             return None
 
+    @hybrid_property
     def profile_image_url(self):
         return os.environ['S3_DOMAIN'] + self.profile_image
 
