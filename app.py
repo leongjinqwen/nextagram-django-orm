@@ -1,9 +1,6 @@
 import os
 import config
 from flask import Flask
-import django
-django.setup()
-from instagram.models.user import User
 from django.apps import apps
 from django.conf import settings
 from flask_wtf.csrf import CSRFProtect
@@ -22,10 +19,9 @@ else:
     app.config.from_object("config.DevelopmentConfig")
 
 
-@app.before_request
-def before_request():
-    # db.connect()
-    django.setup()
+# @app.before_request
+# def before_request():
+#     db.connect()
 
 
 # @app.teardown_request
@@ -47,4 +43,5 @@ login_manager.login_message_category = "danger"
 
 @login_manager.user_loader
 def load_user(user_id):
+    from instagram.models.user import User
     return User.objects.get(id=user_id)

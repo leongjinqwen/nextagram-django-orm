@@ -35,6 +35,10 @@ class User(UserMixin,BaseModel):
     profile_image = models.TextField(max_length=255,default="blank-profile-picture.png")
     private = models.BooleanField(default=False)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['username', 'email']),
+        ]
 
     @classmethod
     def get_or_none(self, **kwargs):
